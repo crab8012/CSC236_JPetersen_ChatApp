@@ -123,7 +123,7 @@
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>132, 17</value>
   </metadata>
-  <data name="richTextBox1.Text" xml:space="preserve">
+  <data name="incomingMsgRTxt.Text" xml:space="preserve">
     <value>Aenean purus mi, volutpat non eleifend at, rutrum sit amet arcu. Vivamus molestie sit amet odio vitae egestas. Phasellus vel arcu nisi nunc.
 
 Aenean purus mi, volutpat non eleifend at, rutrum sit amet arcu. Vivamus molestie sit amet odio vitae egestas. Phasellus vel arcu nisi nunc.
@@ -134,4 +134,7 @@ Aenean purus mi, volutpat non eleifend at, rutrum sit amet arcu. Vivamus molesti
 
 Aenean purus mi, volutpat non eleifend at, rutrum sit amet arcu. Vivamus molestie sit amet odio vitae egestas. Phasellus vel arcu nisi nunc.</value>
   </data>
+  <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>248, 17</value>
+  </metadata>
 </root>
