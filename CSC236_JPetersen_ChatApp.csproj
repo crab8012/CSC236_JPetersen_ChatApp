@@ -94,6 +94,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutFrm.Designer.cs">
+      <DependentUpon>AboutFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClientAndFiles.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -104,6 +110,21 @@
     <Compile Include="Packets.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendCommandFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SendCommandFrm.Designer.cs">
+      <DependentUpon>SendCommandFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SplashFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashFrm.Designer.cs">
+      <DependentUpon>SplashFrm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AboutFrm.resx">
+      <DependentUpon>AboutFrm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -116,6 +137,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SendCommandFrm.resx">
+      <DependentUpon>SendCommandFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashFrm.resx">
+      <DependentUpon>SplashFrm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

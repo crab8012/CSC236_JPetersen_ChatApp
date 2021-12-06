@@ -40,22 +40,23 @@ namespace CSC236_JPetersen_ChatApp
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.conversationTab = new System.Windows.Forms.TabPage();
-            this.incomingMsgRTxt = new System.Windows.Forms.RichTextBox();
+            this.incomingMsgTxt = new System.Windows.Forms.RichTextBox();
             this.sendCMDBtn = new System.Windows.Forms.Button();
             this.outMsgTxt = new System.Windows.Forms.TextBox();
             this.sendMessageBtn = new System.Windows.Forms.Button();
             this.preferencesTab = new System.Windows.Forms.TabPage();
-            this.displayNameTxt = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.savePreferencesBtn = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.serverAddressTxt = new System.Windows.Forms.TextBox();
-            this.serverPortTxt = new System.Windows.Forms.TextBox();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.globalTextColorBtn = new System.Windows.Forms.Button();
-            this.userHashBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.userHashTxt = new System.Windows.Forms.TextBox();
+            this.globalTextColorBtn = new System.Windows.Forms.Button();
+            this.serverPortTxt = new System.Windows.Forms.TextBox();
+            this.serverAddressTxt = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.savePreferencesBtn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.displayNameTxt = new System.Windows.Forms.TextBox();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.refreshChatBtn = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.conversationTab.SuspendLayout();
@@ -85,14 +86,14 @@ namespace CSC236_JPetersen_ChatApp
             // preferencesToolStripMenuItem
             // 
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -108,15 +109,15 @@ namespace CSC236_JPetersen_ChatApp
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // wikiToolStripMenuItem
             // 
             this.wikiToolStripMenuItem.Name = "wikiToolStripMenuItem";
-            this.wikiToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.wikiToolStripMenuItem.Text = "Wiki";
+            this.wikiToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.wikiToolStripMenuItem.Text = "GitHub";
             this.wikiToolStripMenuItem.Click += new System.EventHandler(this.wikiToolStripMenuItem_Click);
             // 
             // statusStrip1
@@ -140,7 +141,8 @@ namespace CSC236_JPetersen_ChatApp
             // 
             // conversationTab
             // 
-            this.conversationTab.Controls.Add(this.incomingMsgRTxt);
+            this.conversationTab.Controls.Add(this.refreshChatBtn);
+            this.conversationTab.Controls.Add(this.incomingMsgTxt);
             this.conversationTab.Controls.Add(this.sendCMDBtn);
             this.conversationTab.Controls.Add(this.outMsgTxt);
             this.conversationTab.Controls.Add(this.sendMessageBtn);
@@ -153,24 +155,25 @@ namespace CSC236_JPetersen_ChatApp
             this.conversationTab.UseVisualStyleBackColor = true;
             this.conversationTab.Click += new System.EventHandler(this.tabPage1_Click);
             // 
-            // incomingMsgRTxt
+            // incomingMsgTxt
             // 
-            this.incomingMsgRTxt.Location = new System.Drawing.Point(6, 6);
-            this.incomingMsgRTxt.Name = "incomingMsgRTxt";
-            this.incomingMsgRTxt.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.incomingMsgRTxt.Size = new System.Drawing.Size(247, 277);
-            this.incomingMsgRTxt.TabIndex = 18;
-            this.incomingMsgRTxt.Text = resources.GetString("incomingMsgRTxt.Text");
+            this.incomingMsgTxt.Location = new System.Drawing.Point(6, 29);
+            this.incomingMsgTxt.Name = "incomingMsgTxt";
+            this.incomingMsgTxt.ReadOnly = true;
+            this.incomingMsgTxt.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.incomingMsgTxt.Size = new System.Drawing.Size(247, 265);
+            this.incomingMsgTxt.TabIndex = 18;
+            this.incomingMsgTxt.Text = resources.GetString("incomingMsgTxt.Text");
             // 
             // sendCMDBtn
             // 
             this.sendCMDBtn.BackColor = System.Drawing.Color.Transparent;
             this.sendCMDBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.sendCMDBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sendCMDBtn.Location = new System.Drawing.Point(209, 290);
+            this.sendCMDBtn.Location = new System.Drawing.Point(6, 324);
             this.sendCMDBtn.Margin = new System.Windows.Forms.Padding(1);
             this.sendCMDBtn.Name = "sendCMDBtn";
-            this.sendCMDBtn.Size = new System.Drawing.Size(45, 19);
+            this.sendCMDBtn.Size = new System.Drawing.Size(101, 22);
             this.sendCMDBtn.TabIndex = 17;
             this.sendCMDBtn.Text = "CMD";
             this.sendCMDBtn.UseVisualStyleBackColor = false;
@@ -178,20 +181,20 @@ namespace CSC236_JPetersen_ChatApp
             // 
             // outMsgTxt
             // 
-            this.outMsgTxt.Location = new System.Drawing.Point(3, 290);
-            this.outMsgTxt.MaxLength = 140;
-            this.outMsgTxt.Multiline = true;
+            this.outMsgTxt.Location = new System.Drawing.Point(6, 300);
+            this.outMsgTxt.MaxLength = 100;
             this.outMsgTxt.Name = "outMsgTxt";
-            this.outMsgTxt.Size = new System.Drawing.Size(200, 56);
+            this.outMsgTxt.Size = new System.Drawing.Size(247, 20);
             this.outMsgTxt.TabIndex = 16;
             this.outMsgTxt.Text = "Aenean purus mi, volutpat non eleifend at, rutrum sit amet arcu. Vivamus molestie" +
     " sit amet odio vitae egestas. Phasellus vel arcu nisi nunc.";
+            this.outMsgTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.outMsgTxt_KeyDown);
             // 
             // sendMessageBtn
             // 
-            this.sendMessageBtn.Location = new System.Drawing.Point(209, 313);
+            this.sendMessageBtn.Location = new System.Drawing.Point(111, 324);
             this.sendMessageBtn.Name = "sendMessageBtn";
-            this.sendMessageBtn.Size = new System.Drawing.Size(45, 33);
+            this.sendMessageBtn.Size = new System.Drawing.Size(150, 22);
             this.sendMessageBtn.TabIndex = 15;
             this.sendMessageBtn.Text = "SEND";
             this.sendMessageBtn.UseVisualStyleBackColor = true;
@@ -200,7 +203,7 @@ namespace CSC236_JPetersen_ChatApp
             // preferencesTab
             // 
             this.preferencesTab.Controls.Add(this.label4);
-            this.preferencesTab.Controls.Add(this.userHashBox);
+            this.preferencesTab.Controls.Add(this.userHashTxt);
             this.preferencesTab.Controls.Add(this.globalTextColorBtn);
             this.preferencesTab.Controls.Add(this.serverPortTxt);
             this.preferencesTab.Controls.Add(this.serverAddressTxt);
@@ -217,64 +220,21 @@ namespace CSC236_JPetersen_ChatApp
             this.preferencesTab.Text = "Preferences";
             this.preferencesTab.UseVisualStyleBackColor = true;
             // 
-            // displayNameTxt
+            // label4
             // 
-            this.displayNameTxt.Location = new System.Drawing.Point(114, 6);
-            this.displayNameTxt.Name = "displayNameTxt";
-            this.displayNameTxt.Size = new System.Drawing.Size(140, 20);
-            this.displayNameTxt.TabIndex = 0;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(48, 118);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(60, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "User Hash:";
             // 
-            // label1
+            // userHashTxt
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Screen Name:";
-            // 
-            // savePreferencesBtn
-            // 
-            this.savePreferencesBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.savePreferencesBtn.Location = new System.Drawing.Point(179, 323);
-            this.savePreferencesBtn.Name = "savePreferencesBtn";
-            this.savePreferencesBtn.Size = new System.Drawing.Size(75, 23);
-            this.savePreferencesBtn.TabIndex = 2;
-            this.savePreferencesBtn.Text = "SAVE";
-            this.savePreferencesBtn.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Server Address:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(45, 61);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Server Port:";
-            // 
-            // serverAddressTxt
-            // 
-            this.serverAddressTxt.Location = new System.Drawing.Point(114, 32);
-            this.serverAddressTxt.Name = "serverAddressTxt";
-            this.serverAddressTxt.Size = new System.Drawing.Size(140, 20);
-            this.serverAddressTxt.TabIndex = 5;
-            // 
-            // serverPortTxt
-            // 
-            this.serverPortTxt.Location = new System.Drawing.Point(114, 58);
-            this.serverPortTxt.MaxLength = 5;
-            this.serverPortTxt.Name = "serverPortTxt";
-            this.serverPortTxt.Size = new System.Drawing.Size(140, 20);
-            this.serverPortTxt.TabIndex = 6;
+            this.userHashTxt.Location = new System.Drawing.Point(114, 115);
+            this.userHashTxt.Name = "userHashTxt";
+            this.userHashTxt.Size = new System.Drawing.Size(138, 20);
+            this.userHashTxt.TabIndex = 8;
             // 
             // globalTextColorBtn
             // 
@@ -286,21 +246,75 @@ namespace CSC236_JPetersen_ChatApp
             this.globalTextColorBtn.UseVisualStyleBackColor = true;
             this.globalTextColorBtn.Click += new System.EventHandler(this.globalTextColorBtn_Click);
             // 
-            // userHashBox
+            // serverPortTxt
             // 
-            this.userHashBox.Location = new System.Drawing.Point(114, 115);
-            this.userHashBox.Name = "userHashBox";
-            this.userHashBox.Size = new System.Drawing.Size(138, 20);
-            this.userHashBox.TabIndex = 8;
+            this.serverPortTxt.Location = new System.Drawing.Point(114, 58);
+            this.serverPortTxt.MaxLength = 5;
+            this.serverPortTxt.Name = "serverPortTxt";
+            this.serverPortTxt.Size = new System.Drawing.Size(140, 20);
+            this.serverPortTxt.TabIndex = 6;
             // 
-            // label4
+            // serverAddressTxt
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(48, 118);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "User Hash:";
+            this.serverAddressTxt.Location = new System.Drawing.Point(114, 32);
+            this.serverAddressTxt.Name = "serverAddressTxt";
+            this.serverAddressTxt.Size = new System.Drawing.Size(140, 20);
+            this.serverAddressTxt.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(45, 61);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Server Port:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(82, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Server Address:";
+            // 
+            // savePreferencesBtn
+            // 
+            this.savePreferencesBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.savePreferencesBtn.Location = new System.Drawing.Point(179, 323);
+            this.savePreferencesBtn.Name = "savePreferencesBtn";
+            this.savePreferencesBtn.Size = new System.Drawing.Size(75, 23);
+            this.savePreferencesBtn.TabIndex = 2;
+            this.savePreferencesBtn.Text = "SAVE";
+            this.savePreferencesBtn.UseVisualStyleBackColor = true;
+            this.savePreferencesBtn.Click += new System.EventHandler(this.savePreferencesBtn_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(33, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(75, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Screen Name:";
+            // 
+            // displayNameTxt
+            // 
+            this.displayNameTxt.Location = new System.Drawing.Point(114, 6);
+            this.displayNameTxt.Name = "displayNameTxt";
+            this.displayNameTxt.Size = new System.Drawing.Size(140, 20);
+            this.displayNameTxt.TabIndex = 0;
+            // 
+            // refreshChatBtn
+            // 
+            this.refreshChatBtn.Location = new System.Drawing.Point(0, 0);
+            this.refreshChatBtn.Name = "refreshChatBtn";
+            this.refreshChatBtn.Size = new System.Drawing.Size(261, 23);
+            this.refreshChatBtn.TabIndex = 19;
+            this.refreshChatBtn.Text = "Refresh Chat";
+            this.refreshChatBtn.UseVisualStyleBackColor = true;
+            this.refreshChatBtn.Click += new System.EventHandler(this.refreshChatBtn_Click);
             // 
             // mainForm
             // 
@@ -342,7 +356,7 @@ namespace CSC236_JPetersen_ChatApp
         private System.Windows.Forms.Button sendCMDBtn;
         private System.Windows.Forms.TextBox outMsgTxt;
         private System.Windows.Forms.Button sendMessageBtn;
-        private System.Windows.Forms.RichTextBox incomingMsgRTxt;
+        private System.Windows.Forms.RichTextBox incomingMsgTxt;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wikiToolStripMenuItem;
         private System.Windows.Forms.Button savePreferencesBtn;
@@ -355,7 +369,8 @@ namespace CSC236_JPetersen_ChatApp
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox userHashBox;
+        private System.Windows.Forms.TextBox userHashTxt;
+        private System.Windows.Forms.Button refreshChatBtn;
     }
 }
 
