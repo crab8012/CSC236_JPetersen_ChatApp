@@ -27,7 +27,7 @@ namespace CSC236_JPetersen_ChatApp
         {
             if(userPrefs != null)
             {
-                Client.sendCommand(new CSC236_JPetersen_ChatAppServer.CommandPacket("save"), userPrefs.ServerAddress, userPrefs.ServerPort);
+                Client.sendCommand(new CSC236_JPetersen_ChatAppServer.CommandPacket("save"), userPrefs.ServerAddress, userPrefs.ServerPort); // Send the save command to the server
             }
             this.Close();
         }
@@ -36,14 +36,14 @@ namespace CSC236_JPetersen_ChatApp
         {
             if (userPrefs != null)
             {
-                Client.sendCommand(new CSC236_JPetersen_ChatAppServer.CommandPacket("shutdown"), userPrefs.ServerAddress, userPrefs.ServerPort);
+                Client.sendCommand(new CSC236_JPetersen_ChatAppServer.CommandPacket("shutdown"), userPrefs.ServerAddress, userPrefs.ServerPort); // Send the shutdown command to the server
             }
             this.Close();
         }
 
         private void ExitBtn_Click(object sender, EventArgs e)
-        {
-            this.Close();
+        { 
+            this.Close(); // Close the Commands window
         }
     }
 }

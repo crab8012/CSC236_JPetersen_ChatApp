@@ -21,18 +21,20 @@ namespace CSC236_JPetersen_ChatApp
             // Splash Screen Stuff
             Thread t = new Thread(new ThreadStart(ShowSplash));
             t.Start();
-            Thread.Sleep(5000);
+            
+            Thread.Sleep(5000); // Show the splash screen for 5000 seconds.
+
+            t.Abort(); // Close the splash screen
 
             InitializeComponent(); // Get the main window working
 
-            t.Abort();
 
-            userPrefs.readFromFile("prefs.json");
+            userPrefs.readFromFile("prefs.json"); // Read in user preferences from file.
         }
 
         public void ShowSplash()
         {
-            Application.Run(new SplashFrm());
+            Application.Run(new SplashFrm()); // Show the splash screen
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
@@ -62,11 +64,12 @@ namespace CSC236_JPetersen_ChatApp
         {
             // Clear out all old messages
             incomingMsgTxt.Text = "";
-            // Send the message
-            ChatPacket toSend = new ChatPacket(outMsgTxt.Text, userPrefs.DisplayName);
-            ArrayList msgs = Client.sendMessage(toSend, userPrefs.ServerAddress, userPrefs.ServerPort);
 
-            foreach(ChatPacket c in msgs)
+            ChatPacket toSend = new ChatPacket(outMsgTxt.Text, userPrefs.DisplayName); // Create outgoing message packet
+            ArrayList msgs = Client.sendMessage(toSend, userPrefs.ServerAddress, userPrefs.ServerPort); // Send and recieve data from server
+
+            // Add all recieved messages to the textbox
+            foreach (ChatPacket c in msgs)
             {
                 incomingMsgTxt.Text = incomingMsgTxt.Text + "\n" + c.ToString();
             }
@@ -76,12 +79,13 @@ namespace CSC236_JPetersen_ChatApp
 
         private void sendCMDBtn_Click(object sender, EventArgs e)
         {
-            SendCommandFrm cmdFrm = new SendCommandFrm(userPrefs);
+            SendCommandFrm cmdFrm = new SendCommandFrm(userPrefs); // Show the command form
             cmdFrm.Show();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Close the program.
             this.Close();
             Environment.Exit(0);
         }
@@ -109,7 +113,7 @@ namespace CSC236_JPetersen_ChatApp
 
         private void globalTextColorBtn_Click(object sender, EventArgs e)
         {
-            colorDialog1.ShowDialog();
+            colorDialog1.ShowDialog(); // Show a color picker dialog box
         }
 
         private void savePreferencesBtn_Click(object sender, EventArgs e)
@@ -134,16 +138,19 @@ namespace CSC236_JPetersen_ChatApp
 
         private void outMsgTxt_KeyDown(object sender, KeyEventArgs e)
         {
+            // If the user hits enter in the textbox
             if(e.KeyCode == Keys.Enter)
             {
-                sendMessageBtn_Click(sender, null);
+                sendMessageBtn_Click(sender, null); // Send the message
             }
         }
 
         private void refreshChatBtn_Click(object sender, EventArgs e)
         {
+            // Send a null command to the server to get all of the messages
             ArrayList msgs = Client.sendNull(userPrefs.ServerAddress, userPrefs.ServerPort);
 
+            // Display the messages in the Textbox
             foreach (ChatPacket c in msgs)
             {
                 incomingMsgTxt.Text = incomingMsgTxt.Text + "\n" + c.ToString();

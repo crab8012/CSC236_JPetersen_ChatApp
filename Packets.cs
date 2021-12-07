@@ -7,16 +7,19 @@ using System.Xml.Serialization;
 
 namespace CSC236_JPetersen_ChatAppServer
 {
+    // Used on the Server Side to help determine what type of packet has been recieved.
     public enum PacketType
     {
         Message, Command, Registration, AdminCommand, None
     }
 
+    // Used client-side only if a message has a different color other than the default text color.
     public enum Color
     {
         None, Red, Orange, Yellow, Green, Blue, Pink, Purple, Black, White
     }
 
+    // Used client-side only if a message has a sound associated with it.
     public enum Sounds
     {
         None, Pop, Boom, Ding, Chime, Error, Success, Scare, Alert

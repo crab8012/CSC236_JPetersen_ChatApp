@@ -10,16 +10,20 @@ namespace CSC236_JPetersen_ChatAppServer
 {
     class Program
     {
-        public const string VERSION = "0.0.1";
-        public const int DEFAULT_PORT = 56565;
-        public const int OWNER_HASH = 1239847272;
-        public static IPAddress addressToUse;
-        public static int portToUse = DEFAULT_PORT;
-
-        public static DataLogger messageLog;
+        // Some constants to help with the program
+        public const string VERSION = "1.1.3"; // The version of the server we are running
+        public const int DEFAULT_PORT = 56565; // The default port to listen on
+        public const int OWNER_HASH = 1239847272; // The user number that will count as an administrator
+        
+        
+        public static IPAddress addressToUse; // The IP address to connect with.
+        public static int portToUse = DEFAULT_PORT; // The port to use in the connection
+        
+        public static DataLogger messageLog; // A record of all messages
 
         static void Main(string[] args)
         {
+            // Program Header
             Console.WriteLine("JPetersen ChatApp Server");
             Console.WriteLine("Version: " + VERSION);
             Console.WriteLine("------------------------\n\n");
@@ -32,14 +36,16 @@ namespace CSC236_JPetersen_ChatAppServer
             int addressIndex = 0;
             int option = -1;
 
+            // List all available IP addresses
             foreach(IPAddress address in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
             {
                 Console.WriteLine(addressIndex + ".   " + address.ToString());
                 addressIndex++;
             }
 
-            addressIndex = Math.Min(Dns.GetHostEntry(Dns.GetHostName()).AddressList.Length-1, addressIndex);
+            addressIndex = Math.Min(Dns.GetHostEntry(Dns.GetHostName()).AddressList.Length-1, addressIndex); // Use the smaller number... Helps prevent IndexOutOfBounds
 
+            // Get user input
             while (true)
             {
                 Console.WriteLine("Enter the Address that the server should listen on: ");
@@ -59,8 +65,9 @@ namespace CSC236_JPetersen_ChatAppServer
 
             }
 
-            addressToUse = Dns.GetHostEntry(Dns.GetHostName()).AddressList[option];
+            addressToUse = Dns.GetHostEntry(Dns.GetHostName()).AddressList[option]; // Store the IP address to use
 
+            // More User Input
             Console.WriteLine("Enter the Port that the server should listen on: ");
             if(!int.TryParse(Console.ReadLine(), out portToUse))
             {
@@ -87,6 +94,7 @@ namespace CSC236_JPetersen_ChatAppServer
             }
         }
 
+        // Create and add a simple message from the server to the message log.
         public static void getStarterMessages(){
             /*
             Program.messageLog.addMessage(new ChatPacket("Test Message"));
@@ -106,6 +114,7 @@ namespace CSC236_JPetersen_ChatAppServer
     {
         public static void StartServer()
         {
+            // Create an endpoint to listen on
             IPEndPoint localEndPoint = new IPEndPoint(Program.addressToUse, Program.portToUse);
             bool continueLoop = true;
 
@@ -141,8 +150,8 @@ namespace CSC236_JPetersen_ChatAppServer
                         while (true)
                         {
                             bytes = new byte[1024];
-                            int bytesRec = handler.Receive(bytes);
-                            data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
+                            int bytesRec = handler.Receive(bytes); // Get data from the client
+                            data += Encoding.ASCII.GetString(bytes, 0, bytesRec); // Convert the data from the client into a string
                             if (data.IndexOf("<EOF>") > -1)
                             {
                                 data = data.Substring(0, data.Length - 5); // Remove "<EOF> from the data to help with JSON Deserialization.
@@ -153,47 +162,48 @@ namespace CSC236_JPetersen_ChatAppServer
                         Console.WriteLine("Text Recieved: {0}", data);
                         Console.WriteLine("DESERIALIZE RECIEVED DATA");
 
-                        Packet p = JsonSerializer.Deserialize<Packet>(data.ToString());
+                        Packet p = JsonSerializer.Deserialize<Packet>(data.ToString()); // Deserialize the string into a packet object
                         if (p.Type == PacketType.Message)
                         {
                             ChatPacket cPacket = JsonSerializer.Deserialize<ChatPacket>(data.ToString());
-                            Program.messageLog.addMessage(cPacket);
+                            Program.messageLog.addMessage(cPacket); // Add the recieved ChatPacket message to the Message Log
 
                             Console.WriteLine();
                         }
                         else if (p.Type == PacketType.Command)
                         {
                             CommandPacket commandPacket = JsonSerializer.Deserialize<CommandPacket>(data.ToString());
+                            // Determine what command has been sent
                             if (commandPacket.Command.Equals("save"))
                             {
-                                Program.messageLog.saveToFile("messageLog.json");
+                                Program.messageLog.saveToFile("messageLog.json"); // Save message log to file
                             }
                             else if (commandPacket.Command.Equals("restore"))
                             {
-                                Program.messageLog.restoreFromFile("messageLog.json");
+                                Program.messageLog.restoreFromFile("messageLog.json"); // Read message log from file
                             }
                             else if (commandPacket.Command.Equals("shutdown"))
                             {
-                                continueLoop = false;
+                                continueLoop = false; // Break out of the loop and quit.
                             }
                         }
                         else if (p.Type == PacketType.AdminCommand)
                         {
                             CommandPacket commandPacket = JsonSerializer.Deserialize<CommandPacket>(data.ToString());
-                            if (commandPacket.Command.Equals("clear"))
+                            if (commandPacket.Command.Equals("clear")) // If we get a clear command
                             {
-                                if (commandPacket.AdminHash == Program.OWNER_HASH)
+                                if (commandPacket.AdminHash == Program.OWNER_HASH) // And the user number is the same as the administrator
                                 {
-                                    Program.messageLog.clearLog(true);
+                                    Program.messageLog.clearLog(true); // Clear the log successfully
                                 }
                                 else
                                 {
-                                    Program.messageLog.clearLog();
+                                    Program.messageLog.clearLog(); // Otherwise, clear it unsuccessfully
                                 }
                             }
                         }
 
-
+                        // Send the message log to the server
                         byte[] msg = Encoding.ASCII.GetBytes(Program.messageLog.getSerializedMessages());
                         handler.Send(msg);
                     }
@@ -203,6 +213,7 @@ namespace CSC236_JPetersen_ChatAppServer
                     }
                     finally
                     {
+                        // Shutdown the socket
                         handler.Shutdown(SocketShutdown.Both);
                         handler.Close();
                     }
@@ -224,6 +235,7 @@ namespace CSC236_JPetersen_ChatAppServer
     {
         public static PacketType getTypeToSend()
         {
+            // Get User Input
             Console.Write("What packet are you sending (admin/cmd/chat/null): ");
             while (true)
             {
@@ -298,24 +310,27 @@ namespace CSC236_JPetersen_ChatAppServer
 
             try
             {
+                // Setup and endpoint
                 IPEndPoint remoteEP = new IPEndPoint(Program.addressToUse, Program.portToUse);
 
+                // Create a new socket
                 Socket sender = new Socket(Program.addressToUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                 try
                 {
+                    // Connect to the server
                     sender.Connect(remoteEP);
 
-                    Console.WriteLine("Socket Connected to {0}", sender.RemoteEndPoint.ToString());
+                    Console.WriteLine("Socket Connected to {0}", sender.RemoteEndPoint.ToString()); // Who are we connected to?
 
-                    byte[] msg = Encoding.ASCII.GetBytes(OutJSONPacket + "<EOF>");
+                    byte[] msg = Encoding.ASCII.GetBytes(OutJSONPacket + "<EOF>"); // Get the bytes for the message to send
 
-                    int bytesSend = sender.Send(msg);
+                    int bytesSend = sender.Send(msg); // Send the message to the server
 
                     // Receive the reponse from the remote device
                     int bytesRec = sender.Receive(bytes);
                     
-                    Console.WriteLine("Output: {0}\n\n", Encoding.ASCII.GetString(bytes, 0, bytesRec));
+                    Console.WriteLine("Output: {0}\n\n", Encoding.ASCII.GetString(bytes, 0, bytesRec)); // Print the response from the server
 
 
                     // Deserialize data
@@ -328,8 +343,6 @@ namespace CSC236_JPetersen_ChatAppServer
                         {
                             Console.WriteLine(JsonSerializer.Deserialize<ChatPacket>(chat.ToString()));
                         }
-                        //Console.WriteLine();
-                        //Console.WriteLine(JsonSerializer.Deserialize<ChatPacket>(chat));
                     }
 
                     // Release the socket

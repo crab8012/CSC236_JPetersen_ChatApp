@@ -8,7 +8,6 @@ namespace CSC236_JPetersen_ChatAppServer
     class DataLogger
     {
         ArrayList packets;
-        int numMessages;
 
         public DataLogger()
         {
@@ -18,7 +17,6 @@ namespace CSC236_JPetersen_ChatAppServer
         public void addMessage(ChatPacket packet)
         {
             this.packets.Add(packet);
-            numMessages = packets.Count;
         }
 
 
@@ -33,6 +31,8 @@ namespace CSC236_JPetersen_ChatAppServer
 
         public String getSerializedMessages()
         {
+            // Serialize the 'packets' ArrayList
+            // Return the string object.
             return JsonSerializer.Serialize(this.packets);
         }
 
@@ -40,12 +40,13 @@ namespace CSC236_JPetersen_ChatAppServer
         {
             using (StreamWriter outWriter = new StreamWriter(fileName))
             {
-                outWriter.Write(getSerializedMessages());
+                outWriter.Write(getSerializedMessages()); // Write the JSON string to a file.
             }
         }
 
         public void restoreFromFile(string fileName)
         {
+            // Read JSON string from file
             using (StreamReader reader = new StreamReader(fileName))
             {
                 // Deserialize data
@@ -55,7 +56,7 @@ namespace CSC236_JPetersen_ChatAppServer
                     Packet p = JsonSerializer.Deserialize<Packet>(packet.ToString());
                     if (p.Type == PacketType.Message)
                     {
-                        this.packets.Add(JsonSerializer.Deserialize<ChatPacket>(packet.ToString()));
+                        this.packets.Add(JsonSerializer.Deserialize<ChatPacket>(packet.ToString())); // Add read-in packets to the active chat log
                     }
                 }
             }
@@ -63,16 +64,18 @@ namespace CSC236_JPetersen_ChatAppServer
 
         public void clearLog(bool confirm = false)
         {
-            if(confirm == true)
+            if(confirm == true) // Very basic confirmation of intent.
             {
-                packets.Clear();
-                numMessages = 0;
+                packets.Clear(); // Clear the chat log
             }
             else
             {
                 Console.WriteLine("ERROR - SECURITY VIOLATION. Attempted to clear log without confirmation.");
             }
         }
+
+        /* PLANNING STUFF BELOW */
+        // The below comments have helped me get things working the way I intended them to
 
         // Have an ArrayList of ChatPackets.
         // The size of the ArrayList will be used to synchronize the clients with the server.
